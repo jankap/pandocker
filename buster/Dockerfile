@@ -37,6 +37,7 @@ RUN set -x && \
         texlive-lang-french \
         texlive-lang-german \
         texlive-lang-european \
+        texlive-lang-portuguese \
         texlive-luatex \
         texlive-pstricks \
         texlive-xetex \
@@ -106,7 +107,8 @@ RUN fetch-pandoc.sh ${PANDOC_VERSION} ./cache/pandoc.deb && \
 # Python filters
 #
 ADD requirements.txt ./
-RUN pip3 --no-cache-dir install --find-links file://${PWD}/cache -r requirements.txt
+RUN pip3 --no-cache-dir install --find-links file://${PWD}/cache -r requirements.txt && \
+    rm -rf ~/.cache/pip
 
 #
 # pandoc-crossref

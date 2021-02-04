@@ -24,12 +24,15 @@ RUN set -x && \
     fi; \
     apt-get -qq update && \
     apt-get -qy install --no-install-recommends \
-        #
+        # langs
+        texlive-lang-arabic \
+        texlive-lang-chinese \
+        texlive-lang-cyrillic \
+        texlive-lang-japanese \
         texlive-lang-other \
         # hindi fonts
         fonts-deva \
         # persian fonts
-        texlive-lang-arabic \
         fonts-farsiweb \
         # dia
         dia \
@@ -43,6 +46,9 @@ RUN set -x && \
         fonts-noto-mono \
         # for emojis
         librsvg2-bin \
+        # xfont ?
+        xfonts-75dpi \
+        xfonts-base \
     # clean up
     && apt-get clean && \
     rm -rf /var/lib/apt/lists/* /etc/apt/apt.conf.d/01proxy

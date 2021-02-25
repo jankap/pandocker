@@ -131,6 +131,16 @@ teardown() {
 }
 
 ##
+## 34x: uikit
+##
+@test "341: HTML report with uikit template" {
+  $PANDOC $IN/foo.md --template=/.pandoc/templates/pandoc-uikit/standalone.html \
+          --resource-path=/.pandoc/templates/pandoc-uikit/ \
+          --self-contained \
+          -o $OUT/foo.uikit.html
+}
+
+##
 ## 4xx: Fonts, Langages and Special Characters
 ##
 

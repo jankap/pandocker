@@ -84,25 +84,6 @@ teardown() {
           --variable mainfont="Noto Sans"
 }
 
-## 144x: Emojis
-@test "1441: Generate a PDF file containing emojis" {
-  #if [ $VARIANT = 'buster' ]; then
-    skip "Emojis support is not fully functionnal with buster (see issue #176)"
-  #fi
-  DIR=emojis
-  $PANDOC $IN/$DIR/emojis.md \
-          --pdf-engine=xelatex \
-          -o $OUT/$DIR/emojis.pdf
-}
-
-# Bug #75 : https://github.com/dalibo/pandocker/issues/75
-@test "1442: Generate an HTML file containing weird emojis" {
-  DIR=emojis
-  $PANDOC $IN/$DIR/magicienletter.md -o $OUT/$DIR/magicienletter.html
-  $DIFF $OUT/$DIR/magicienletter.html $EXP/$DIR/magicienletter.html
-}
-
-
 
 ##
 ## 19xx: Other entrypoints

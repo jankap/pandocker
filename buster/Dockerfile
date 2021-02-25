@@ -182,7 +182,18 @@ ARG LEAFLET_REPO=https://gitlab.com/daamien/pandoc-leaflet-template/raw
 ARG LEAFLET_VERSION=1.0
 RUN wget ${LEAFLET_REPO}/${LEAFLET_VERSION}/leaflet.latex -O ${TEMPLATES_DIR}/leaflet.latex
 
-
+# uikit template
+ARG UIKIT_REPO=https://github.com/diversen/pandoc-uikit.git
+ARG UIKIT_VERSION=v10.0.3
+RUN git clone --depth 1 --branch ${UIKIT_VERSION} ${UIKIT_REPO} ${TEMPLATES_DIR}/pandoc-uikit && \
+    ln -s ${TEMPLATES_DIR}/pandoc-uikit/standalone.html ${TEMPLATES_DIR}/uikit.html && \
+    mkdir ${TEMPLATES_DIR}/pandoc-uikit/images && \
+    touch ${TEMPLATES_DIR}/pandoc-uikit/images/favicon.ico && \
+    touch ${TEMPLATES_DIR}/pandoc-uikit/images/apple-touch-icon.png && \
+    mkdir ${TEMPLATES_DIR}/fonts && \
+    wget http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/fonts/fontawesome-webfont.woff2 -P ${TEMPLATES_DIR}/fonts/ && \
+    wget http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/fonts/fontawesome-webfont.woff -P ${TEMPLATES_DIR}/fonts/ && \
+    wget http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/fonts/fontawesome-webfont.ttf -P ${TEMPLATES_DIR}/fonts/
 ##
 ## E N D
 ##

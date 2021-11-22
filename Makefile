@@ -5,7 +5,7 @@
 ##
 
 # name of the image
-NAME?=dalibo/pandocker
+NAME?=jankap/pandocker
 
 # By default, the tag is the git branch name
 TAG?=$(shell git branch | grep -e "^*" | cut -d' ' -f 2)

@@ -10,11 +10,6 @@ NAME?=jankap/pandocker
 # By default, the tag is the git branch name
 TAG?=$(shell git branch | grep -e "^*" | cut -d' ' -f 2)
 
-# These versions must be changed together.
-# See https://github.com/lierdakil/pandoc-crossref/releases to find the latest
-# release corresponding to the desired Pandoc version.
-PANDOC_VERSION?=2.14.2
-PANDOC_CROSSREF_VERSION?=0.3.12.1-pandoc-2.14
 
 # Bats
 # We use bats-core instead of the original bats
@@ -43,38 +38,14 @@ endif
 all: build
 
 .PHONY: build
-build:  buster
+build:  bullseye-custom
 
-.PHONY: stretch
-stretch: stretch/Dockerfile
+.PHONY: bullseye-custom
+bullseye-custom: bullseye-custom/Dockerfile
 	docker build \
+	    $(BUILD_OPT) \
 	    --build-arg APT_CACHER=$${APT_CACHER-} \
-	    --build-arg PANDOC_VERSION=$(PANDOC_VERSION) \
-	    --build-arg PANDOC_CROSSREF_VERSION=$(CROSSREF_VERSION) \
-	    --tag $(NAME):$@-$(TAG) --file $^ .
-
-.PHONY: alpine
-alpine: alpine/Dockerfile
-	docker build --tag $(NAME):$@-$(TAG) --file $^ .
-
-.PHONY: alpine-full
-alpine-full: alpine-full/Dockerfile
-	docker build --tag $(NAME):$@-$(TAG) --file $^ .
-
-.PHONY: buster
-buster: buster/Dockerfile
-	docker build \
-	    $(BUILD_OPT) \
-	    --build-arg PANDOC_VERSION=$(PANDOC_VERSION) \
-	    --build-arg CROSSREF_VERSION=$(CROSSREF_VERSION) \
-	    --tag $(NAME):$@-$(TAG) \
-	    --file $^ .
-
-.PHONY: buster-full
-buster-full: buster-full/Dockerfile
-	docker build \
-	    $(BUILD_OPT) \
-	    --tag $(NAME):$@-$(TAG) \
+		--tag $(NAME):$@-$(TAG) \
 	    --file $^ .
 
 .PHONY: test
@@ -97,10 +68,8 @@ warm-cache:
 	./fetch-pandoc-crossref.sh $(PANDOC_VERSION) $(PANDOC_CROSSREF_VERSION) cache/pandoc-crossref.tar.gz
 	pip3 download --dest cache/ --requirement requirements.txt
 
-alpine_sh alpine-full_sh: #: enter a docker image (useful for testing)
-	docker run --rm -it --volume $(PWD):/pandoc --entrypoint=sh $(NAME):$(@:_bash=)-$(TAG)
 
-buster_bash buster-full_bash: #: enter a docker image (useful for testing)
+bullseye_bash: #: enter a docker image (useful for testing)
 	docker run --rm -it --volume $(PWD):/pandoc --entrypoint=bash $(NAME):$(@:_bash=)-$(TAG)
 
 

@@ -95,7 +95,7 @@ clean:
 warm-cache:
 	./fetch-pandoc.sh $(PANDOC_VERSION) cache/pandoc.deb
 	./fetch-pandoc-crossref.sh $(PANDOC_VERSION) $(PANDOC_CROSSREF_VERSION) cache/pandoc-crossref.tar.gz
-	pip download --dest cache/ --requirement requirements.txt
+	pip3 download --dest cache/ --requirement requirements.txt
 
 alpine_sh alpine-full_sh: #: enter a docker image (useful for testing)
 	docker run --rm -it --volume $(PWD):/pandoc --entrypoint=sh $(NAME):$(@:_bash=)-$(TAG)

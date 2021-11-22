@@ -233,23 +233,23 @@ RUN wget ${LEAFLET_REPO}/${LEAFLET_VERSION}/leaflet.latex -O ${TEMPLATES_DIR}/le
 # emojis support for latex
 # https://github.com/mreq/xelatex-emoji
 #
-ARG TEXMF=/usr/share/texmf/tex/latex/
-ARG EMOJI_DIR=/tmp/twemoji2
-RUN git clone --single-branch --depth=1 --branch gh-pages https://github.com/twitter/twemoji.git $EMOJI_DIR && \
-    # fetch xelatex-emoji
-    mkdir -p ${TEXMF} && \
-    cd ${TEXMF} && \
-    git clone --single-branch --branch images https://github.com/daamien/xelatex-emoji.git xelatex-emoji2 && \
-    # convert twemoji SVG files into PDF files
-    cp -r $EMOJI_DIR/2/svg xelatex-emoji2/images && \
-    cd xelatex-emoji2/images && \
-    ../bin/convert_svgs_to_pdfs ./*.svg && \
-    # clean up
-    rm -f *.svg && \
-    rm -fr ${EMOJI_DIR} && \
-    # update texlive
-    cd ${TEXMF} && \
-    texhash
+# ARG TEXMF=/usr/share/texmf/tex/latex/
+# ARG EMOJI_DIR=/tmp/twemoji2
+# RUN git clone --single-branch --depth=1 --branch gh-pages https://github.com/twitter/twemoji.git $EMOJI_DIR && \
+#     # fetch xelatex-emoji
+#     mkdir -p ${TEXMF} && \
+#     cd ${TEXMF} && \
+#     git clone --single-branch --branch images https://github.com/daamien/xelatex-emoji.git xelatex-emoji2 && \
+#     # convert twemoji SVG files into PDF files
+#     cp -r $EMOJI_DIR/2/svg xelatex-emoji2/images && \
+#     cd xelatex-emoji2/images && \
+#     ../bin/convert_svgs_to_pdfs ./*.svg && \
+#     # clean up
+#     rm -f *.svg && \
+#     rm -fr ${EMOJI_DIR} && \
+#     # update texlive
+#     cd ${TEXMF} && \
+#     texhash
 
 ##
 ## E N D

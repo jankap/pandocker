@@ -22,8 +22,8 @@ RUN set -x && \
     if [ -n "${APT_CACHER}" ] ; then \
         echo "Acquire::http::Proxy \"${APT_CACHER}\";" | tee /etc/apt/apt.conf.d/01proxy ; \
     fi; \
-    apt-get -qq update && \
-    apt-get -qy install --no-install-recommends \
+    apt-get update && \
+    apt-get -y install --no-install-recommends \
         # for deployment
         openssh-client \
         rsync \
@@ -44,7 +44,7 @@ RUN set -x && \
         # siunits, algorithm, much more, 15 MB
         texlive-science \
         # relatively big, 50 MB but all tools
-        textlive-extra-utils \
+        texlive-extra-utils \
         # tikz and co 60 MB
         texlive-pictures \
         xzdec \
@@ -68,7 +68,7 @@ RUN set -x && \
         python3-yaml \
         # required for PDF meta analysis
         poppler-utils \
-        zlibc \
+        # zlibc \
         # svg conversion
         librsvg2-bin \
         # block diagrams
@@ -205,7 +205,7 @@ ARG EISVOGEL_VERSION=2.0.0
 RUN wget ${EISVOGEL_REPO}/v${EISVOGEL_VERSION}/eisvogel.tex -O ${TEMPLATES_DIR}/eisvogel.latex
 RUN tlmgr init-usertree && \
     # Debian/buster comes with TL2018, and thus refuses to work with the 2020 repositories, even in self mode
-    # tlmgr option repository ftp://tug.org/historic/systems/texlive/2018/tlnet-final && \
+    tlmgr option repository ftp://tug.org/historic/systems/texlive/2020/tlnet-final && \
     # bullseye has TL2020
     tlmgr install fontawesome5 awesomebox ly1 inconsolata sourcesanspro sourcecodepro mweights || \
     # This first call returns an error but the packages are installed,

@@ -13,7 +13,7 @@ pandoc-latex-newpage==0.1.2
 pandoc-minted==0.2
 pandoc-mustache==0.1
 pandoc-dalibo-guidelines==1.1.1
-PyPDF2==1.26
+PyPDF2==1.27.9
 Pygments==2.10.0
 pandoc-xnos==2.5.0
 pandoc-fignos==2.4.0
